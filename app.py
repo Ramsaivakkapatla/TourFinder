@@ -137,9 +137,9 @@ def stars_html(rating_val):
 # ── LOAD DATA ─────────────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    path = r"C:\\Users\\Ramsai vakkapatla\\Downloads\\Top Indian Places to Visit.csv"
+    
     try:
-        df = pd.read_csv(path)
+        df = pd.read_csv("Top Indian Places to Visit.csv")
         df.columns = df.columns.str.strip()
 
         # ── Detect & normalise the Google review rating column ──────────────
