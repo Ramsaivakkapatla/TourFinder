@@ -108,7 +108,7 @@ def calc_cost(days, n_places, tier, intercity, local_trip):
 
 @st.cache_data
 def load_data():
-    path = r"C:\\Users\\Ramsai vakkapatla\\Downloads\\Top Indian Places to Visit.csv"
+    path = r"Top Indian Places to Visit.csv"
     try:
         df = pd.read_csv(path); df.columns = df.columns.str.strip()
         candidates = ["Google review rating","Google Review Rating","google review rating","Google Reviews","google_review_rating"]
