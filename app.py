@@ -108,7 +108,7 @@ def calc_cost(days, n_places, tier, intercity, local_trip):
 
 @st.cache_data
 def load_data():
-    path = r"Top Indian Places to Visit.csv"
+    path = r"C:\\Users\\Ramsai vakkapatla\\Downloads\\Top Indian Places to Visit.csv"
     try:
         df = pd.read_csv(path); df.columns = df.columns.str.strip()
         candidates = ["Google review rating","Google Review Rating","google review rating","Google Reviews","google_review_rating"]
@@ -270,7 +270,45 @@ if show_ag:
     cols   = st.columns(min(3, len(agents)))
     for i, a in enumerate(agents[:6]):
         with cols[i % len(cols)]:
-            st.markdown(f'<div class="ac"><div style="float:right;color:#e8a020;font-weight:700">{a["rating"]} ★</div><div class="an">{a["name"]}</div><div class="ai"><span style="background:#1a7a6e18;color:#1a7a6e;padding:2px 7px;border-radius:100px;font-size:.68rem">{a["specialty"]}</span></div><div class="ai" style="margin-top:7px">📞 {a["phone"]}<br>✉️ {a["email"]}</div></div>', unsafe_allow_html=True)
+            r_val      = float(a["rating"])
+            star_color = "#f5c518" if r_val >= 4.5 else "#e8a020" if r_val >= 4.0 else "#9cbfbc"
+            card = (
+                '<div style="background:#ffffff;border:1.5px solid #e2dbd0;border-radius:16px;'
+                'overflow:hidden;box-shadow:0 4px 18px rgba(28,43,42,.10);margin-bottom:4px">'
+                # accent bar
+                '<div style="height:4px;background:linear-gradient(90deg,#c8502a,#e8a020)"></div>'
+                '<div style="padding:14px 15px 13px">'
+                # rating badge float right
+                f'<div style="float:right;display:inline-flex;align-items:center;gap:4px;'
+                f'background:linear-gradient(135deg,#1c2b2a,#2d4f4e);'
+                f'color:{star_color};font-weight:800;font-size:.84rem;'
+                f'padding:3px 11px;border-radius:100px;margin-left:8px;white-space:nowrap">'
+                f'{a["rating"]} ★</div>'
+                # agency name — bold, dark, Playfair
+                f'<div style="font-family:Playfair Display,serif;font-size:1.05rem;'
+                f'font-weight:700;color:#1c2b2a;line-height:1.35;'
+                f'margin-bottom:9px;overflow:hidden">{a["name"]}</div>'
+                # specialty pill
+                f'<div style="margin-bottom:10px">'
+                f'<span style="display:inline-block;background:#1a7a6e15;'
+                f'color:#1a7a6e;border:1px solid #1a7a6e44;'
+                f'padding:3px 11px;border-radius:100px;font-size:.71rem;'
+                f'font-weight:700;letter-spacing:.05em;text-transform:uppercase">'
+                f'{a["specialty"]}</span></div>'
+                # divider
+                '<div style="border-top:1px solid #f0ebe3;margin-bottom:9px"></div>'
+                # contacts
+                '<div style="display:flex;flex-direction:column;gap:5px">'
+                f'<div style="display:flex;align-items:center;gap:7px;'
+                f'font-size:.8rem;font-weight:600;color:#2d4040">'
+                f'<span>📞</span>{a["phone"]}</div>'
+                f'<div style="display:flex;align-items:center;gap:7px;'
+                f'font-size:.8rem;font-weight:600;color:#2d4040">'
+                f'<span>✉️</span>{a["email"]}</div>'
+                '</div>'
+                '</div></div>'
+            )
+            st.markdown(card, unsafe_allow_html=True)
 
 # ── COST ──────────────────────────────────────────────────────────────────────
 if show_cost:
